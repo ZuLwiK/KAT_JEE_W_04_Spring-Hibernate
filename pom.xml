@@ -85,6 +85,11 @@
             <version>2.3.0</version>
         </dependency>
 
-    </dependencies>
+        <!--        TUTAJ DODALEM ZALEZNOSC DO  TWORZENIA JSON Z OBIEKTÓW W JAVIE -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>[2.9.10.1,)</version>
+    </dependency>
 
 </project>
