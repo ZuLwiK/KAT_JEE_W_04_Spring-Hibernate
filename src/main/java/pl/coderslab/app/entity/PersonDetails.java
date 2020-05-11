@@ -1,25 +1,27 @@
+
 package pl.coderslab.app.entity;
 
 import javax.persistence.*;
+
 @Entity
-@Table(name = "personDetails")
+@Table(name = "persons_details")
 public class PersonDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
     private String firstName;
     private String lastName;
-    private Long streetNumber;
+    private Integer streetNumber;
     private String street;
     private String city;
 
-
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -39,11 +41,11 @@ public class PersonDetails {
         this.lastName = lastName;
     }
 
-    public long getStreetNumber() {
+    public Integer getStreetNumber() {
         return streetNumber;
     }
 
-    public void setStreetNumber(long streetNumber) {
+    public void setStreetNumber(Integer streetNumber) {
         this.streetNumber = streetNumber;
     }
 

@@ -1,28 +1,42 @@
 package pl.coderslab.app.dao;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.coderslab.app.entity.Book;
 import pl.coderslab.app.entity.Publisher;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import javax.persistence.Query;
+import java.util.List;
 
 @Repository
 @Transactional
 public class PublisherDao {
+
     @PersistenceContext
     EntityManager entityManager;
-    public void save (Publisher publisher) {
+
+    public void savePublisher(Publisher publisher) {
         entityManager.persist(publisher);
     }
-    public void delete (Publisher publisher) {
-        entityManager.remove(publisher);
+
+    public void updatePublisher(Publisher publisher) {
+        entityManager.merge(publisher);
     }
-    public Publisher findById (Long id) {
+
+    public Publisher findPublisherById(long id) {
         return entityManager.find(Publisher.class, id);
     }
-    public void update(Publisher publisher) {
-        entityManager.merge(publisher);
+
+    public void deletePublisher(Publisher publisher) {
+        entityManager.remove(entityManager.contains(publisher) ? publisher : entityManager.merge(publisher));
+    }
+
+    public List<Publisher> findAllPublishers(){
+        Query query = entityManager.createQuery("SELECT p FROM Publisher p");
+        List<Publisher> publishers = query.getResultList();
+
+        return publishers;
     }
 }

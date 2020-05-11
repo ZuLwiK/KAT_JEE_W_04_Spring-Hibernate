@@ -34,25 +34,19 @@ public class PersonController {
     @RequestMapping("/person/get/{id}")
     @ResponseBody
     public String getPerson(@PathVariable long id) {
-        Person person = personDao.findById(id);
+        Person person = personDao.findPersonById(id);
         return person.toString();
     }
     @RequestMapping("/person/update/{id}/{login}/{password}/{email}/{password}")
     @ResponseBody
     public Person updatePerson(@PathVariable long id, @PathVariable String login, @PathVariable String password, @PathVariable String email){
-        Person person=personDao.findById(id);
+        Person person=personDao.findPersonById(id);
         person.setLogin(login);
         person.setEmail(email);
         person.setPassword(password);
         return person;
     }
-    @RequestMapping("/author/delete/{id}")
-    @ResponseBody
-    public String deletePerson(@PathVariable long id) {
-        Person person = personDao.findById(id);
-        personDao.delete(person);
-        return "deleted";
-    }
+
     @GetMapping("/person/addAll")
     @ResponseBody
     public Person savePersonAll() {
@@ -69,7 +63,7 @@ public class PersonController {
         personDetails.setStreetNumber(15);
         personDetails.setCity("City");
         personDetailsDao.save(personDetails);
-        person.setDetails(personDetails);
+        person.setPersonDetails(personDetails);
         return person;
     }
 }

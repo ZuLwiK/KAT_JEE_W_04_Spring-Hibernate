@@ -3,29 +3,19 @@ package pl.coderslab.app.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "persons")
-
 public class Person {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
+
     private String login;
     private String password;
     private String email;
 
     @OneToOne
-    @JoinColumn(name = "personDetails_id")
-    private PersonDetails details;
-
-
-    public PersonDetails getDetails() {
-        return details;
-    }
-
-    public void setDetails(PersonDetails details) {
-        this.details = details;
-    }
+    @JoinColumn(name = "personDetails_id" )
+    private PersonDetails personDetails;
 
     public Long getId() {
         return id;
@@ -59,15 +49,11 @@ public class Person {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+    public PersonDetails getPersonDetails() {
+        return personDetails;
     }
 
-
+    public void setPersonDetails(PersonDetails personDetails) {
+        this.personDetails = personDetails;
+    }
 }
