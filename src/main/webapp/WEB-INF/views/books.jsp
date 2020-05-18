@@ -19,7 +19,7 @@
     <div class="col-md-7 col-md-6 col-sm-offset-3">
         <table class="table table-bordered">
             <tr>
-                <td colspan="5">Books</td>
+                <td colspan="7">Books</td>
             </tr>
             <tr>
                 <th>Title: <c:out value="${book.title}"/></th>
@@ -27,7 +27,9 @@
                 <th>Description:</th>
                 <th>Publisher:</th>
                 <th>Authors:</th>
-                <th colspan="2"></th>
+                <th colspan="2"><a href='/bookForm'>
+                    <button>Add</button>
+                </a></th>
             </tr>
             <c:forEach items="${books}" var="book">
                 <tr>

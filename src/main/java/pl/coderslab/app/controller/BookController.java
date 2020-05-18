@@ -3,17 +3,12 @@ package pl.coderslab.app.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
-import pl.coderslab.app.dao.BookDao;
-import pl.coderslab.app.dao.PersonDao;
-import pl.coderslab.app.dao.PersonDetailsDao;
-import pl.coderslab.app.dao.PublisherDao;
-import pl.coderslab.app.entity.Book;
-import pl.coderslab.app.entity.Person;
-import pl.coderslab.app.entity.PersonDetails;
-import pl.coderslab.app.entity.Publisher;
+import pl.coderslab.app.dao.*;
+import pl.coderslab.app.entity.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -24,16 +19,18 @@ public class BookController {
     private final PublisherDao publisherDao;
     private final PersonDao personDao;
     private final PersonDetailsDao personDetailsDao;
+    private final AuthorDao authorDao;
 
-    public BookController(BookDao bookDao, PublisherDao publisherDao, PersonDao personDao, PersonDetailsDao personDetailsDao) {
+    public BookController(BookDao bookDao, PublisherDao publisherDao, PersonDao personDao, PersonDetailsDao personDetailsDao, AuthorDao authorDao) {
         this.bookDao = bookDao;
         this.publisherDao = publisherDao;
         this.personDao = personDao;
         this.personDetailsDao = personDetailsDao;
+        this.authorDao = authorDao;
     }
     @GetMapping(value = "/all")
     public String getAll(Model model) {
-        List<Book> books = bookDao.findAll();
+        List<Book> books = bookDao.findAllBooks();
         model.addAttribute("books", books);
         return "books";
     }
@@ -44,14 +41,20 @@ public class BookController {
         return "bookForm";
     }
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-    public RedirectView edit(@ModelAttribute Book book){
+    public String edit(@Valid Book book, BindingResult result){
+        if (result.hasErrors()){
+            return "/edit/{id}";
+        }
         bookDao.updateBook(book);
-        return new RedirectView("/book/all");
+        return "redirect:/book/all";
 
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public String delete(@ModelAttribute Book book){
+    public String delete(@Valid Book book, BindingResult result){
+        if (result.hasErrors()){
+            return "/all";
+        }
         bookDao.deleteBook(book);
         return "redirect:/book/all";
     }
@@ -61,10 +64,13 @@ public class BookController {
         return publisherDao.findAllPublishers();
     }
 
+    @ModelAttribute("authors")
+    public List<Author> authorList(){return authorDao.findAllAuthors();}
+
     //    @GetMapping(value = "/all")
 //    @ResponseBody
 //    public List<Book> getAll(){
-//        List<Book> books = bookDao.findAll();
+//        List<Book> books = bookDao.findAllBooks();
 //
 //        return books;
 //    }

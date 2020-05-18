@@ -8,7 +8,6 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>All publishers</title>
@@ -19,14 +18,16 @@
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
         <table class="table table-bordered">
             <tr>
-                <td colspan="4">Publishers</td>
+                <th colspan="6">Publishers</th>
             </tr>
             <tr>
                 <th>Name: <c:out value="${book.title}"/></th>
                 <th>Nip:</th>
                 <th>Regon:</th>
                 <th>Books:</th>
-                <th colspan="2"></th>
+                <th colspan="2"><a href='/publisher/'>
+                    <button>Add</button>
+                </a></th>
             </tr>
             <c:forEach items="${publishers}" var="publisher">
                 <tr>

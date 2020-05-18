@@ -3,18 +3,18 @@ package pl.coderslab.app.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "persons")
 public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String login;
     private String password;
     private String email;
 
     @OneToOne
-    @JoinColumn(name = "personDetails_id" )
+    @JoinColumn(name = "personDetails_id", unique = false )
     private PersonDetails personDetails;
 
     public Long getId() {
@@ -55,5 +55,15 @@ public class Person {
 
     public void setPersonDetails(PersonDetails personDetails) {
         this.personDetails = personDetails;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

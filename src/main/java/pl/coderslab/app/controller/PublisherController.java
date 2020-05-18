@@ -25,13 +25,14 @@ public class PublisherController {
         this.publisherDao = publisherDao;
     }
 
+//    Wyświetlanie wszystkich wydawców
     @RequestMapping(value = "/all")
     public String getAll(Model model) {
         List<Publisher> publishers = publisherDao.findAllPublishers();
         model.addAttribute("publishers", publishers);
         return "publishers";
     }
-
+//  Edytowanie wydawce, z powtórzeniem walidacji
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editForm(Model model, @PathVariable long id) {
         model.addAttribute("publisher", publisherDao.findPublisherById(id));
@@ -45,8 +46,9 @@ public class PublisherController {
             return "/all";
         }
         publisherDao.updatePublisher(publisher);
-        return ("redirect:/publisher/all");
+        return "redirect:/publisher/all";
     }
+//    Usuwanie publishera
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public String delete(@Validated({
             PublishersGroup.class}) @Valid Publisher publisher,BindingResult result){
@@ -54,6 +56,6 @@ public class PublisherController {
             return "/all";
         }
         publisherDao.deletePublisher(publisher);
-        return ("redirect:publisher/all");
+        return "redirect:publisher/all";
     }
 }

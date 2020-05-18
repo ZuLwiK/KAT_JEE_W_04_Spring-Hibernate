@@ -1,6 +1,7 @@
 package pl.coderslab.app.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.pl.NIP;
 import org.hibernate.validator.constraints.pl.REGON;
 
@@ -26,6 +27,7 @@ public class Publisher {
     @REGON
     private String regon;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "publisher_id")
     private List<Book> books = new ArrayList<>();

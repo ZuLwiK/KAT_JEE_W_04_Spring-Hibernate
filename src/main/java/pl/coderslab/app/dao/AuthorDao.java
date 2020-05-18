@@ -33,10 +33,9 @@ public class AuthorDao {
         entityManager.remove(entityManager.contains(author) ? author : entityManager.merge(author));
     }
 
-    public List<Author> findAll(){
+    public List<Author> findAllAuthors(){
         Query query = entityManager.createQuery("SELECT a FROM Author a");
         List<Author> authors = query.getResultList();
-
         return authors;
     }
 

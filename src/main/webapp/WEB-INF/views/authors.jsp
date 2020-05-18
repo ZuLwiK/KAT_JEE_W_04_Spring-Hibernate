@@ -8,17 +8,18 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>All authors</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 </head>
 <body>
 <div>
     <div class="col-md-7 col-md-6 col-sm-offset-3">
         <table class="table table-bordered">
             <tr>
-                <td colspan="5">Books</td>
+                <th colspan="7">Authors</th>
             </tr>
             <tr>
                 <th>FirstName:</th>
@@ -26,7 +27,9 @@
                 <th>YearOfBirth:</th>
                 <th>Pesel:</th>
                 <th>Email:</th>
-                <th colspan="2"></th>
+                <th colspan="2"><a href='/author/'>
+                    <button>Add</button>
+                </a></th>
             </tr>
             <c:forEach items="${authors}" var="author">
                 <tr>

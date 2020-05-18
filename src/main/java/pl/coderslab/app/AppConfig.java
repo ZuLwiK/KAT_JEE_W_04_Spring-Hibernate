@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import pl.coderslab.app.converter.AuthorConverter;
 import pl.coderslab.app.converter.PublisherConverter;
 import pl.coderslab.app.entity.Publisher;
 
@@ -90,10 +91,16 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(getPublisherConverter());
+        registry.addConverter(getAuthorConverter());
     }
 
     @Bean
     public PublisherConverter getPublisherConverter(){
         return new PublisherConverter();
+    }
+
+    @Bean
+    public AuthorConverter getAuthorConverter(){
+        return new AuthorConverter();
     }
 }

@@ -1,0 +1,1 @@
+INSERT INTO test_spring.publishers (id, name, nip, regon) VALUES (1, 'Greg', '6782821670', '350884338');

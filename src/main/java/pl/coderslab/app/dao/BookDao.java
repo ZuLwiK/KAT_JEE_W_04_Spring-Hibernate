@@ -1,6 +1,7 @@
 package pl.coderslab.app.dao;
 
 import org.springframework.stereotype.Repository;
+import pl.coderslab.app.entity.Author;
 import pl.coderslab.app.entity.Book;
 import pl.coderslab.app.entity.Publisher;
 
@@ -19,19 +20,20 @@ public class BookDao {
     EntityManager entityManager;
 
 
-    public List<Book> findAll(){
+    public List<Book> findAllBooks() {
         Query query = entityManager.createQuery("SELECT b FROM Book b");
         List<Book> books = query.getResultList();
 
         return books;
     }
-    public List<Book> findAllBookPropostitions(){
+
+    public List<Book> findAllBookPropostitions() {
         Query query = entityManager.createQuery("SELECT b FROM Book b WHERE b.proposition=true");
         List<Book> propostitions = query.getResultList();
         return propostitions;
     }
 
-    public List<Book> findAllWithRatingGreaterThen(Integer rating){
+    public List<Book> findAllWithRatingGreaterThen(Integer rating) {
         Query query = entityManager.createQuery("SELECT b FROM Book b WHERE b.rating > :rating");
         query.setParameter("rating", rating);
 
@@ -40,17 +42,23 @@ public class BookDao {
         return books;
     }
 
+//    public List<Author> findAllAuthors(Long bookId) {
+//        Book book  = findBookById(bookId);
+//        Query query = entityManager.createQuery("SELECT a FROM Author a");
+//        List<Author> authors = query.getResultList();
+//        return authors;
+//    }
 
-    public void saveBook(Book book){
+    public void saveBook(Book book) {
         entityManager.persist(book);
     }
 
-    public void updateBook(Book book){
+    public void updateBook(Book book) {
 
         entityManager.merge(book);
     }
 
-    public Book findBookById(Long id){
+    public Book findBookById(Long id) {
         return entityManager.find(Book.class, id);
     }
 

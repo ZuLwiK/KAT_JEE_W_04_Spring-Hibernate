@@ -1,0 +1,1 @@
+INSERT INTO test_spring.books (id, description, pages, proposition, rating, title, publisher_id) VALUES (1, 'Janko Muzykant – nowela autorstwa Henryka Sienkiewicza. Po raz pierwszy ukazała się w "Kurierze Warszawskim" w 1879 roku. Jej akcja toczy się w XIX wieku, a głównym bohaterem jest chorowity chłopiec Janko', 58, false, 4, 'Janko Muzykant', null);

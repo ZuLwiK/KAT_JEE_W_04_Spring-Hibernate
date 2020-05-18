@@ -1,14 +1,15 @@
 package pl.coderslab.app.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.app.dao.AuthorDao;
 import pl.coderslab.app.entity.Author;
 import pl.coderslab.app.entity.Book;
+import pl.coderslab.app.entity.Publisher;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -20,45 +21,49 @@ public class AuthorController {
         this.authorDAO = authorDAO;
     }
 
-    @RequestMapping("/add")
-    @ResponseBody
-    public String saveAuthor() {
-        Author author = new Author();
-        author.setFirstName("Bruce");
-        author.setLastName("Ekhel");
-        authorDAO.saveAuthor(author);
-        return "Id dodanego autora to:"
-                + author.getId();
-    }
-
-    @RequestMapping("/get/{id}")
-    @ResponseBody
-    public String getAuthor(@PathVariable long id) {
-        Author author = authorDAO.findAuthorById(id);
-        return author.toString();
-    }
-
-    @RequestMapping("/update/{id}/{firstName}/{lastName}")
-    @ResponseBody
-    public String updateAuthor(@PathVariable long id, @PathVariable String firstName, @PathVariable String lastName) {
-        Author author = authorDAO.findAuthorById(id);
-        author.setFirstName(firstName);
-        author.setLastName(lastName);
-        return author.toString();
-    }
-
-    //    @RequestMapping("/author/delete/{id}")
-//    @ResponseBody
-//    public String deleteAuthor(@PathVariable long id) {
-//        Author author = authorDAO.findAuthorById(id);
-//        authorDAO.deleteAuthor(author);
-//        return "deleted";
-//    }
+//  Wyświetlanie wszystkich autorów
     @GetMapping(value = "/all")
-    @ResponseBody
-    public List<Author> getAll() {
-        List<Author> authors = authorDAO.findAll();
-
-        return authors;
+    public String getAll(Model model) {
+        List<Author> authors = authorDAO.findAllAuthors();
+        model.addAttribute("authors",authors);
+        return "authors";
     }
+//  Dodawanie nowego autora po odpowiedniej walidacji
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String getForm(Model model) {
+        model.addAttribute("author", new Author());
+        return "authorForm";
+    }
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public String create(@Valid Author author, BindingResult result) {
+        if (result.hasErrors()) {
+            return "authorForm";
+        }
+        authorDAO.saveAuthor(author);
+        return "redirect:/author/all";
+    }
+//  Edytowanie autora, z powtórzeniem walidacji
+    @RequestMapping(value="/edit/{id}", method= RequestMethod.GET)
+    public String editForm(Model model,@PathVariable long id) {
+        model.addAttribute("author",authorDAO.findAuthorById(id));
+        return "authorForm";
+    }
+    @RequestMapping(value="/edit/{id}", method= RequestMethod.POST)
+    public String edit(@Valid Author author,BindingResult result){
+        if (result.hasErrors()){
+            return "authorForm";
+        }
+        authorDAO.updateAuthor(author);
+        return "redirect:/author/all";
+    }
+//  Usuwanie autora
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String delete(@Valid Author author,BindingResult result){
+        if(result.hasErrors()){
+            return "/all";
+        }
+        authorDAO.deleteAuthor(author);
+        return "redirect:/author/all";
+    }
+
 }

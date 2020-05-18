@@ -18,6 +18,7 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
     private String firstName;
 
@@ -34,8 +35,7 @@ public class Author {
     private String email;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "authors", fetch = FetchType.EAGER)
-
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Book> books = new ArrayList<>();
 
     public void setId(Long id) {
@@ -94,12 +94,17 @@ public class Author {
         return books;
     }
 
+
     @Override
     public String toString() {
         return "Author{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+//                ", yearOfBirth=" + yearOfBirth +
+                ", pesel='" + pesel + '\'' +
+                ", email='" + email + '\'' +
+//               ", books=" + books +
                 '}';
     }
 }

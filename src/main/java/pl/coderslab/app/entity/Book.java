@@ -37,8 +37,7 @@ public class Book {
 
     @NotNull(groups = {BookValidation.class})
     @JsonIgnore
-    @ManyToMany
-            (fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Author> authors = new ArrayList<>();
 
     @NotNull(groups = {BookValidation.class})
@@ -110,6 +109,7 @@ public class Book {
         this.proposition = proposition;
     }
 
+
     @Override
     public String toString() {
         return "Book{" +
@@ -117,6 +117,10 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", rating=" + rating +
                 ", description='" + description + '\'' +
+                ", pages=" + pages +
+                ", proposition=" + proposition +
+                ", authors=" + authors +
+                ", publisher=" + publisher +
                 '}';
     }
 }

@@ -7,9 +7,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.view.RedirectView;
+import pl.coderslab.app.dao.AuthorDao;
 import pl.coderslab.app.dao.BookDao;
 import pl.coderslab.app.dao.PublisherDao;
+import pl.coderslab.app.entity.Author;
 import pl.coderslab.app.entity.Book;
 import pl.coderslab.app.entity.Publisher;
 
@@ -22,11 +23,13 @@ public class BookFormController {
 
     private final PublisherDao publisherDao;
     private final BookDao bookDao;
+    private final AuthorDao authorDao;
 
 
-    public BookFormController(PublisherDao publisherDao, BookDao bookDao) {
+    public BookFormController(PublisherDao publisherDao, BookDao bookDao, AuthorDao authorDao) {
         this.publisherDao = publisherDao;
         this.bookDao = bookDao;
+        this.authorDao = authorDao;
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -48,4 +51,7 @@ public class BookFormController {
     public List<Publisher> publisherList() {
         return publisherDao.findAllPublishers();
     }
+    @ModelAttribute("authors")
+    public List<Author> authorList(){
+        return authorDao.findAllAuthors();}
 }

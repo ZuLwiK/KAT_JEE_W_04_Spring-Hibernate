@@ -1,0 +1,1 @@
+INSERT INTO test_spring.authors (id, email, firstName, lastName, pesel, yearOfBirth) VALUES (1, 'henryk.sienkiewicz@gmail.com', 'Henryk', 'Sienkiewicz', '4605051010713', 1846);
